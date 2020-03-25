@@ -7,7 +7,6 @@ import org.bson.BsonString;
 import org.bson.conversions.Bson;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.azure.functions.ExecutionContext;
 import com.microsoft.azure.functions.HttpMethod;
@@ -39,14 +38,11 @@ public class GetTestResults {
 				Bson filter = new BsonDocument("_id", new BsonString(hash));
 				TestResult res = new ObjectMapper().readValue(client.getDatabase("fn-test").getCollection("testresult").find(filter).first().toJson(),TestResult.class);
 				return request.createResponseBuilder(HttpStatus.OK).body(res).build();
-			} catch (JsonMappingException e) {
+			} catch ( JsonProcessingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return request.createResponseBuilder(HttpStatus.INTERNAL_SERVER_ERROR).build();
+				return request.createResponseBuilder(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage()).build();
+			} 
 		}
 	}
 }
