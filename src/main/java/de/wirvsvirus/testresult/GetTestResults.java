@@ -19,6 +19,7 @@ import com.microsoft.azure.functions.annotation.BindingName;
 import com.microsoft.azure.functions.annotation.FunctionName;
 import com.microsoft.azure.functions.annotation.HttpTrigger;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 
 public class GetTestResults {
 
@@ -34,7 +35,7 @@ public class GetTestResults {
 			String uri = System.getenv("mongodb_uri");
 			if (uri==null)
 				uri="mongodb://localhost=27017/fn-test";
-			try (MongoClient client = new MongoClient(uri)) {
+			try (MongoClient client = new MongoClient(new MongoClientURI(uri))) {
 				Bson filter = new BsonDocument("_id", new BsonString(hash));
 				TestResult res = new ObjectMapper().readValue(client.getDatabase("fn-test").getCollection("testresult").find(filter).first().toJson(),TestResult.class);
 				return request.createResponseBuilder(HttpStatus.OK).body(res).build();
