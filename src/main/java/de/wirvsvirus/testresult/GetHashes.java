@@ -17,9 +17,9 @@ import com.microsoft.azure.functions.annotation.HttpTrigger;
 
 public class GetHashes {
 
-	@FunctionName("hashes")
+	@FunctionName("hashes-eu")
 	public HttpResponseMessage run(
-			@HttpTrigger(name = "req", methods = {HttpMethod.GET }, authLevel = AuthorizationLevel.ANONYMOUS) 
+			@HttpTrigger(name = "req", methods = {HttpMethod.GET }, authLevel = AuthorizationLevel.ANONYMOUS,route = "hashes") 
 			HttpRequestMessage<Optional<String>> request,
 			final ExecutionContext context) {
 		context.getLogger().info("Java HTTP trigger processed a request.");

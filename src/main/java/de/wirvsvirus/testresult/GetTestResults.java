@@ -22,7 +22,7 @@ import com.mongodb.MongoClientURI;
 
 public class GetTestResults {
 
-	@FunctionName("tests")
+	@FunctionName("tests-eu")
 	public HttpResponseMessage run(
 			@HttpTrigger(name = "req", methods = {HttpMethod.GET }, authLevel = AuthorizationLevel.ANONYMOUS, route = "tests/{hash}") 
 			HttpRequestMessage<Optional<String>> request,

@@ -19,7 +19,7 @@ import com.mongodb.MongoClientURI;
 
 public class PostTestResults {
 
-	@FunctionName("tests")
+	@FunctionName("tests-eu")
 	public HttpResponseMessage run(@HttpTrigger(name = "req", methods = {
 			HttpMethod.POST }, authLevel = AuthorizationLevel.FUNCTION, route = "tests/{hash}") HttpRequestMessage<Optional<String>> request,
 			@BindingName("hash") String hash, final ExecutionContext context) {
